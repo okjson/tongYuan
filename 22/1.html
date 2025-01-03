@@ -1,0 +1,22 @@
+<script>
+    window.onload = () => {
+        if ('WebSocket' in window) {
+            // 创建websocket连接
+            let ws = new WebSocket('ws://127.0.0.1:8000');
+            // 成功连接的时候推送一条消息，此时服务端就可以开始推送数据了
+            ws.onopen = () => {
+                console.log('websocket链接成功---');
+                ws.send('success');
+            }
+            ws.onmessage = (message) => {
+                let data = message.data;
+                console.log('获取websocket消息-', data);
+            }
+            ws.onerror = () => {
+                console.error('websocket链接失败');
+            }
+        } else {
+            console.error('当前设备不支持websocket');
+        };
+    };
+</script>
